@@ -28,52 +28,69 @@ function minesweeper(matrix) {
   function checkMatrixItem (item) {
     return checkMine(item);
   }
+  let flag = [];
+  matrix.forEach((item) => item.forEach((val) => {
+    if (val === true) {
+      flag.push(true);
+    } else {
+      flag.push(false);
+    }
+  }));
+  flag = flag.some((val) => val);
   const res = JSON.parse(JSON.stringify(matrix));
-  for (let i = 0; i < matrix.length; i++) {
-    for (let k = 0; k < matrix[i].length; k++) {
-      let counter = 0;
-      counter += checkMatrixItem(matrix[i][k]);
-      if (i === 0) {
-        if (k === 0) {
-          counter += checkMatrixItem(matrix[i][k + 1]);
-          counter += checkMatrixItem(matrix[i + 1][k]);
-        } else if (k === matrix[i].length - 1) {
-          counter += checkMatrixItem(matrix[i][k - 1]);
-          counter += checkMatrixItem(matrix[i + 1][k]);
-        } else {
-          counter += checkMatrixItem(matrix[i][k - 1]);
-          counter += checkMatrixItem(matrix[i][k + 1]);
-          counter += checkMatrixItem(matrix[i + 1][k]);
-        }
-      } else if (i === matrix.length - 1) {
-        if (k === 0) {
-          counter += checkMatrixItem(matrix[i][k + 1]);
-          counter += checkMatrixItem(matrix[i - 1][k]);
-        } else if (k === matrix[i].length - 1) {
-          counter += checkMatrixItem(matrix[i][k - 1]);
-          counter += checkMatrixItem(matrix[i - 1][k]);
-        } else {
-          counter += checkMatrixItem(matrix[i][k - 1]);
-          counter += checkMatrixItem(matrix[i][k + 1]);
-          counter += checkMatrixItem(matrix[i - 1][k]);
-        }
-      } else if (i !== 0 && i !== matrix.length - 1) {
-        if (k === 0) {
-          counter += checkMatrixItem(matrix[i + 1][k]);
-          counter += checkMatrixItem(matrix[i - 1][k]);
-          counter += checkMatrixItem(matrix[i][k + 1]);
-        } else if (k === matrix[i].length - 1) {
-          counter += checkMatrixItem(matrix[i + 1][k]);
-          counter += checkMatrixItem(matrix[i - 1][k]);
-          counter += checkMatrixItem(matrix[i][k - 1]);
-        } else {
-          counter += checkMatrixItem(matrix[i + 1][k]);
-          counter += checkMatrixItem(matrix[i - 1][k]);
-          counter += checkMatrixItem(matrix[i][k - 1]);
-          counter += checkMatrixItem(matrix[i][k + 1]);
-        }
+  if (flag === false) {
+    for (let i = 0; i < matrix.length; i++) {
+      for (let k = 0; k < matrix[i].length; k++) {
+        res[i][k] = 0;
       }
-      res[i][k] = counter === 0 ? 1 : counter;
+    }
+  } else {
+    for (let i = 0; i < matrix.length; i++) {
+      for (let k = 0; k < matrix[i].length; k++) {
+        let counter = 0;
+        counter += checkMatrixItem(matrix[i][k]);
+        if (i === 0) {
+          if (k === 0) {
+            counter += checkMatrixItem(matrix[i][k + 1]);
+            counter += checkMatrixItem(matrix[i + 1][k]);
+          } else if (k === matrix[i].length - 1) {
+            counter += checkMatrixItem(matrix[i][k - 1]);
+            counter += checkMatrixItem(matrix[i + 1][k]);
+          } else {
+            counter += checkMatrixItem(matrix[i][k - 1]);
+            counter += checkMatrixItem(matrix[i][k + 1]);
+            counter += checkMatrixItem(matrix[i + 1][k]);
+          }
+        } else if (i === matrix.length - 1) {
+          if (k === 0) {
+            counter += checkMatrixItem(matrix[i][k + 1]);
+            counter += checkMatrixItem(matrix[i - 1][k]);
+          } else if (k === matrix[i].length - 1) {
+            counter += checkMatrixItem(matrix[i][k - 1]);
+            counter += checkMatrixItem(matrix[i - 1][k]);
+          } else {
+            counter += checkMatrixItem(matrix[i][k - 1]);
+            counter += checkMatrixItem(matrix[i][k + 1]);
+            counter += checkMatrixItem(matrix[i - 1][k]);
+          }
+        } else if (i !== 0 && i !== matrix.length - 1) {
+          if (k === 0) {
+            counter += checkMatrixItem(matrix[i + 1][k]);
+            counter += checkMatrixItem(matrix[i - 1][k]);
+            counter += checkMatrixItem(matrix[i][k + 1]);
+          } else if (k === matrix[i].length - 1) {
+            counter += checkMatrixItem(matrix[i + 1][k]);
+            counter += checkMatrixItem(matrix[i - 1][k]);
+            counter += checkMatrixItem(matrix[i][k - 1]);
+          } else {
+            counter += checkMatrixItem(matrix[i + 1][k]);
+            counter += checkMatrixItem(matrix[i - 1][k]);
+            counter += checkMatrixItem(matrix[i][k - 1]);
+            counter += checkMatrixItem(matrix[i][k + 1]);
+          }
+        }
+        res[i][k] = counter === 0 ? 1 : counter;
+      }
     }
   }
   return res;

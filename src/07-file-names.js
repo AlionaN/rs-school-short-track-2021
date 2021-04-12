@@ -17,8 +17,10 @@ function renameFiles(names) {
   const res = [];
   for (let i = 0; i < names.length; i++) {
     if (res.indexOf(names[i]) !== -1) {
-      const count = res.filter((item) => item === names[i]).length;
-      res.push(`${names[i]}(${count})`);
+      const slicedNames = names.slice(0, i);
+      const countRes = res.filter((item) => item === names[i]).length;
+      const countNames = slicedNames.filter((item) => item === names[i]).length;
+      res.push(`${names[i]}(${Math.max(countRes, countNames)})`);
     } else {
       res.push(names[i]);
     }

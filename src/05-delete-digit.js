@@ -10,10 +10,13 @@
  *
  */
 function deleteDigit(n) {
-  const nStr = `${n}`;
-  const nArr = nStr.split('');
-  nArr.splice(Math.max(nArr), 1);
-  return nArr.join('');
+  let nStr = `${n}`;
+  let nArr = nStr.split('');
+  nArr = nArr.map((item) => +item);
+  nArr.splice(nArr.indexOf(Math.min(...nArr)), 1);
+  nStr = nArr.join('');
+  nStr = +nStr;
+  return nStr;
 }
 
 module.exports = deleteDigit;
